@@ -1,0 +1,17 @@
+apiVersion: batch/v1
+kind: CronJob
+metadata:
+  name: spring-boot-k8s-test-cronjob
+spec:
+  schedule: "*/2 * * * *" # Her 2 dakikada bir çalıştır
+  successfulJobsHistoryLimit: 1
+  failedJobsHistoryLimit: 5
+  jobTemplate:
+    spec:
+      template:
+        spec:
+          containers:
+            - name: spring-boot-k8s
+              image: ahmetserefoglu/springboot-k8s-example:latest # Aynı image kullanılır
+              imagePullPolicy: IfNotPresent
+          restartPolicy: OnFailure
